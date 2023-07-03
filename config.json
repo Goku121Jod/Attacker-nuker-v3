@@ -1,6 +1,6 @@
 {
-    "token": "MTEyNTMwODMyMTMxMDcyMDA2MA.GmDn8_.ZiFHSpXNf08pmjOkVaEiRMLotJWgBLctR1w1xs",
-    "proxy": false,
+    "token": "bot_token",
+    "proxy": true,
     "nuke": {
         "channels_name": [
             "Blood runs cord",
