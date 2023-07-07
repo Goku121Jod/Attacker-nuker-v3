@@ -1,6 +1,6 @@
 {
     "token": "bot_token",
-    "proxy": true,
+    "proxy": false,
     "nuke": {
         "channels_name": [
             "Blood runs cord",
@@ -14,8 +14,8 @@
             "Blood runs u"
         ],
         "messages_content": [
-            "@everyone @here https://discord.gg/EQTmhYVvtJ",
-            "@everyone @here https://discord.gg/EQTmhYVvtJ",
-            "@everyone @here https://discord.gg/EQTmhYVvtJ"
+            "@everyone @here https://discord.gg/AsUdgHDJyu",
+            "@everyone @here https://discord.gg/AsUdgHDJyu",
+            "@everyone @here https://discord.gg/AsUdgHDJyu"
         ]
     }
