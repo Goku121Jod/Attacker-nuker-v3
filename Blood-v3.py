@@ -1,23 +1,21 @@
 """
-nothing 
+nothing here
 """
+
+
 import threading, webbrowser, discord, random, httpx, json, time, os; from discord.ext import commands;from itertools import cycle
 
-VERSION = '1.0.0'
-
+VERSION = '3.0.0'
 __intents__ = discord.Intents.default()
 __intents__.members = True
 __proxies__, __client__, __config__, __threads__= cycle(open("proxies.txt", "r").read().splitlines()), commands.Bot(command_prefix="+", help_command=None, intents=__intents__), json.load(open("config.json", "r", encoding="utf-8")), 45
 token = __config__["token"]
 os.system("cls") if os.name == "nt" else os.system("clear")
 
-blood_art = """
-                                          
-                                    
-                                   
+Blood_art = """
+                                        
                                   
-                                
-                                    *BLOOD NUKER V3 FUCK THE DC*
+                                       BLOOD NUKER V3 IS HERE
                               ═══════════════════════════════════         
                          ═════════════════════════════════════════════
 """.format("\x1b[38;5;17m", "\x1b[38;5;18m", "\x1b[38;5;19m", "\x1b[38;5;20m", "\x1b[38;5;21m", "\x1b[0m")
@@ -248,12 +246,12 @@ class blood:
 
     
     def menu(self):
-        os.system(f"cls & title x444 Nuker ^| Authenticated as: {__client__.user.name}#{__client__.user.discriminator}")
-        print(x444_art + options + "\n")
+        os.system(f"cls & title blood Nuker ^| Authenticated as: {__client__.user.name}#{__client__.user.discriminator}")
+        print(blood_art + options + "\n")
         ans = input("{}({}x444{}) Option{}:{} ".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m")) 
         
         if ans in ["1", "01"]:
-            scrape = input("{}({}x444{}) Fetch IDs [Y/N]{}:{} ".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
+            scrape = input("{}({}blood{}) Fetch IDs [Y/N]{}:{} ".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
             if scrape.lower() == "y":
                 try:
                     guild = __client__.get_guild(int(guildid))
@@ -286,7 +284,7 @@ class blood:
                     t.join()
             
             time.sleep(3)
-            print("{}({}blood{}) Kicked {}/{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.kicked), len(members)))
+            print("{}({}x444{}) Kicked {}/{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.kicked), len(members)))
             time.sleep(1.5)
             self.menu()
             
@@ -308,7 +306,7 @@ class blood:
                     t.join()
                 
             time.sleep(3)
-            print("{}({}Blood{}) Created {}/{} channels".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.channels), amount))
+            print("{}({}blood{}) Created {}/{} channels".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.channels), amount))
             time.sleep(1.5)
             self.menu()
             
@@ -336,7 +334,7 @@ class blood:
                     t.join()
                 
             time.sleep(3)
-            print("{}({}Blood{}) Deleted {}/{} channels".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.channels), len(channels)))
+            print("{}({}blood{}) Deleted {}/{} channels".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.channels), len(channels)))
             time.sleep(1.5)
             self.menu()
             
@@ -350,7 +348,7 @@ class blood:
                     t.join()
                 
             time.sleep(3)
-            print("{}({}Blood{}) Deleted {}/{} roles".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.roles), len(roles)))
+            print("{}({}blood{}) Deleted {}/{} roles".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.roles), len(roles)))
             time.sleep(1.5)
             self.menu()
             
@@ -364,7 +362,7 @@ class blood:
                     t.join()
                     
             time.sleep(3)
-            print("{}({}x444{}) Deleted {}/{} emojis".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.emojis), len(emojis)))
+            print("{}({}blood{}) Deleted {}/{} emojis".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.emojis), len(emojis)))
             time.sleep(1.5)
             self.menu()
             
@@ -381,47 +379,48 @@ class blood:
                     t.join()
                     
             time.sleep(3)
-            print("{}({}Blood{}) Spammed {}/{} messages".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.messages), amount))
+            print("{}({}blood{}) Spammed {}/{} messages".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", len(self.messages), amount))
             time.sleep(1.5)
             self.menu()
             
         elif ans == "10":
             try:
-                response = self.session.get("https://github.com/notspeezy/x444-Nuker/releases/latest")
+                response = self.session.get("https://github.com/Blood-op/Blood-nuker-v3/releases/latest")
                 check_version = response.headers.get('location').split('/')[7].split('v')[1]
                 if VERSION != check_version:
-                    print("{}({}Blood{}) You're using an outdated version!".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m
+                    print("{}({}blood{}) You're using an outdated version!".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
+                    webbrowser.open(f"https://github.com/notspeezy/Blood-nuker-v3/releases/tag/{check_version}")
                 else:
                     print("{}({}blood{}) You're using the current version!".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
             except:
-                print("{}({}Blood nuker{}) Couldn't reach the releases!".format("\x1b[0m", "\x1b[38;5;21m", "\
+                print("{}({}blood{}) Couldn't reach the releases!".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
             
             time.sleep(1.5)
             self.menu()
     
         
         elif ans == "11":
-            print("- Blood Nuker is a open sourced nuker which has been developed with heart by blood\Press any key to return.")
+            print("- blood Nuker is a open sourced nuker which has been developed with heart by blood. My goal was to make a great 2022's working nuker and to compete with actuals viral discord nukers.\n- Github: https://github.com/Blood-op/\n- Press any key to return.")
             input("")
             self.menu()
         
         elif ans == "12":
-            print("{}({}x444{}) Thanks for using Blood nuker!".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
+            print("{}({}blood{}) Thanks for using Blood nuker!".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
             time.sleep(1.5)
             os._exit(0)
             
     
 @__client__.event
 async def on_ready():
-    print("{}({}x444{}) Authenticated as{}: {}{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", f"{__client__.user.name}#{__client__.user.discriminator}"))
+    print("{}({}blood{}) Authenticated as{}: {}{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", f"{__client__.user.name}#{__client__.user.discriminator}"))
     time.sleep(1.5)
-    Blood().menu()
+    blood().menu()
     
 
 if __name__ == "__main__":
     try:
         os.system("title Blood Nuker ^| Authentication & mode con: cols=95 lines=25")
-        guildid = input("{}({}Blood Nuker{}) Guild ID{}:{} ".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
+        guildid = input("{}({}blood{}) Guild ID{}:{} ".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
         __client__.run(token, bot=True)
     except Exception as e:
         print("{}({}-{}) {}".format("\x1b[0m", "\x1b[31m", "\x1b[0m", e))
