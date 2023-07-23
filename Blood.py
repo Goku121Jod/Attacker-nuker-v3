@@ -417,7 +417,7 @@ class blood:
 async def on_ready():
     print("{}({}blood{}) Authenticated as{}: {}{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", f"{__client__.user.name}#{__client__.user.discriminator}"))
     time.sleep(1.5)
-    x444().menu()
+    blood().menu()
     
 
 if __name__ == "__main__":
