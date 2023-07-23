@@ -415,14 +415,14 @@ class Blood:
     
 @__client__.event
 async def on_ready():
-    print("{}({}x444{}) Authenticated as{}: {}{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", f"{__client__.user.name}#{__client__.user.discriminator}"))
+    print("{}({}Blood{}) Authenticated as{}: {}{}".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", f"{__client__.user.name}#{__client__.user.discriminator}"))
     time.sleep(1.5)
-    x444().menu()
+    Blood().menu()
     
 
 if __name__ == "__main__":
     try:
-        os.system("title x444 Nuker ^| Authentication & mode con: cols=95 lines=25")
+        os.system("title Blood Nuker ^| Authentication & mode con: cols=95 lines=25")
         guildid = input("{}({}x444{}) Guild ID{}:{} ".format("\x1b[0m", "\x1b[38;5;21m", "\x1b[0m", "\x1b[38;5;21m", "\x1b[0m"))
         __client__.run(token, bot=True)
     except Exception as e:
